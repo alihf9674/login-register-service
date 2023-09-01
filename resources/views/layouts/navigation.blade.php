@@ -8,8 +8,8 @@
     </button>
     <div class="auth-btn collapse justify-content-end navbar-collapse">
         @guest
-            <a class="btn btn-info  mr-2" href="{{route('register-form')}}">@lang('public.login')</a>
-            <a class="btn btn-info mr-2" href="">@lang('public.register')</a>
+            <a class="btn btn-info  mr-2" href="{{route('auth.login.form')}}">@lang('public.login')</a>
+            <a class="btn btn-info mr-2" href="{{route('register-form')}}">@lang('public.register')</a>
         @endguest
         @auth
             <ul class="navbar-nav">
@@ -20,7 +20,7 @@
                     </a>
                     <div class="dropdown-menu logout-btn" aria-labelledby="navbarDropdown">
                         <a href="" class="dropdown-item"></a>
-                        <a class="dropdown-item" href="">@lang('auth.logout')</a>
+                        <a class="dropdown-item" href="{{route('auth.logout')}}">@lang('auth.logout')</a>
                     </div>
                 </li>
             </ul>

@@ -29,15 +29,15 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
+            'email' => ['required', 'email','exists:users'],
+            'password' => ['required'],
         ];
     }
 
     /**
      * Attempt to authenticate the request's credentials.
      *
-     * @return void
+     * @return void|bool
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -47,13 +47,12 @@ class LoginRequest extends FormRequest
 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => __('auth.user or password was wrong'),
             ]);
         }
-
         RateLimiter::clear($this->throttleKey());
+        return true;
     }
 
     /**

@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{route('auth.login')}}">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label" for="email">@lang('auth.email')</label>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="offset-sm-3">
                             <button type="submit" class="btn btn-primary">@lang('auth.login')</button>
-                            <a href="" class="btn btn-danger">@lang('auth.login with google')</a>
+{{--                            <a href="" class="btn btn-danger">@lang('auth.login with google')</a>--}}
                         </div>
                 </div>
                 </form>

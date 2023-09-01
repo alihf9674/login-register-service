@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'failed' => 'These credentials do not match our records.',
     'register user' => 'ثبت نام کاربر',
     'login' => 'ورود',
     'register' => 'ثبت نام',

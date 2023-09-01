@@ -3,7 +3,8 @@
         @lang('auth.your registration was successful')
     </div>
 @endif
-@if(session('failed'))
+@if(session('wrongCredentials'))
     <div class="alert alert-danger">
+        @lang('auth.user or password was wrong')
     </div>
 @endif
