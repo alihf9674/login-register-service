@@ -11,6 +11,10 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
+
+    protected $maxAttempts = 8;
+    protected $decaySeconds = 120;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,7 +33,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => ['required', 'email','exists:users'],
+            'email' => ['required', 'email', 'exists:users'],
             'password' => ['required'],
         ];
     }
@@ -45,10 +49,10 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
-            RateLimiter::hit($this->throttleKey());
+        if (!Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+            RateLimiter::hit($this->throttleKey(), $this->decaySeconds);
             throw ValidationException::withMessages([
-                'email' => __('auth.user or password was wrong'),
+                'email' => trans('auth.user or password was wrong'),
             ]);
         }
         RateLimiter::clear($this->throttleKey());
@@ -64,11 +68,11 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), $this->maxAttempts)) {
             return;
         }
 
-        event(new Lockout($this));
+//        event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
@@ -87,6 +91,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey()
     {
-        return Str::lower($this->input('email')).'|'.$this->ip();
+        return Str::lower($this->input('email')) . '|' . $this->ip();
     }
 }

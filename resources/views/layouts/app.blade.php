@@ -9,21 +9,25 @@
     @yield('links')
     <script src="{{asset('js/app.js')}}"></script>
     <title>@yield('title')</title>
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
-
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-{{--                    {{ $header }}--}}
-                </div>
-            </header>
-            <!-- Page Content -->
-                <div class="container">
-                    @yield('content')
-                </div>
+</head>
+<body class="font-sans antialiased">
+<div class="min-h-screen bg-gray-100">
+    @include('layouts.navigation')
+    @if(session("mustVerifyEmail"))
+        <div class="alert alert-danger text-center small">
+            @lang('auth.you must verify your email')
         </div>
-    </body>
+@endif
+<!-- Page Heading -->
+    <header class="bg-white shadow">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            {{--                    {{ $header }}--}}
+        </div>
+    </header>
+    <!-- Page Content -->
+    <div class="container">
+        @yield('content')
+    </div>
+</div>
+</body>
 </html>
