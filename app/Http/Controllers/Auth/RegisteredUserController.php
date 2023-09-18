@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserRegistered;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
             'phone_number' => $request->phone_number,
         ]);
 
-        event(new Registered($user));
+        event(new UserRegistered($user));
 
         Auth::login($user);
 
