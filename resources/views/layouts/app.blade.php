@@ -15,7 +15,12 @@
     @include('layouts.navigation')
     @if(session("mustVerifyEmail"))
         <div class="alert alert-danger text-center small">
-            @lang('auth.you must verify your email')
+            @lang('auth.you must verify your email' , ['link' => route('verification.send.email')])
+        </div>
+@endif
+    @if(session("verificationEmailSent"))
+        <div class="alert alert-success text-center">
+            @lang('auth.verification email sent')
         </div>
 @endif
 <!-- Page Heading -->
