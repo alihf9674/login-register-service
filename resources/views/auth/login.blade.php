@@ -9,7 +9,8 @@
                         <div class="col-sm-7">
                             @lang('auth.login')
                         </div>
-                        <div class="col-sm-5 text-right"><a href=""><small>@lang('auth.login with magic link')</small></a></div>
+                        <div class="col-sm-5 text-right"><a
+                                href=""><small>@lang('auth.login with magic link')</small></a></div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,7 +38,7 @@
                                 <label class="form-check-label" for="remember"><small>@lang('auth.remember me')</small></label>
                             </div>
                             <div class="form-check">
-                                <a href=""><small>@lang('auth.forget your password?')</small></a>
+                                <a href="{{route('auth.forgot-password.form')}}"><small>@lang('auth.forget your password?')</small></a>
                             </div>
                         </div>
                         <div class="offset-sm-3">
@@ -48,7 +49,7 @@
                         </div>
                         <div class="offset-sm-3">
                             <button type="submit" class="btn btn-primary">@lang('auth.login')</button>
-{{--                            <a href="" class="btn btn-danger">@lang('auth.login with google')</a>--}}
+                            {{--                            <a href="" class="btn btn-danger">@lang('auth.login with google')</a>--}}
                         </div>
                 </div>
                 </form>
