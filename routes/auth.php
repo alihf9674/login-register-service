@@ -33,14 +33,14 @@ Route::middleware('guest')->group(function () {
         ->name('auth.password.reset.form');
 
     Route::post('auth/reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.update');
+        ->name('auth.password.reset');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('auth/verify-email', [EmailVerificationPromptController::class, ' __invoke'])
         ->name('verification.notice');
 
-    Route::get('auth/email/verify/' ,[VerifyEmailController::class, 'verify'])
+    Route::get('auth/email/verify' ,[VerifyEmailController::class, 'verify'])
         ->middleware(['signed', 'throttle:6,1'])
         ->name('auth.email.verify');
 
