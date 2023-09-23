@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-
 @section('title' , __('auth.reset password'))
-
 
 @section('content')
 

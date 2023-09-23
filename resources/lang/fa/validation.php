@@ -28,7 +28,8 @@ return [
         'password_confirmation' => 'تایید کلمه عبور',
         'password' => 'کلمه عبور',
         'token' => 'توکن',
-        'code' => 'کد'
+        'code' => 'کد',
+        'g-recaptcha-response' => 'زدن تیک من ربات نیستم'
     ]
 ];
 
