@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,13 +16,13 @@ Route::middleware('guest')->group(function () {
         ->name('register-form');
 
     Route::post('auth/register', [RegisteredUserController::class, 'store'])
-    ->name('register');
+        ->name('register');
 
     Route::get('auth/login', [AuthenticatedSessionController::class, 'create'])
         ->name('auth.login.form');
 
     Route::post('auth/login', [AuthenticatedSessionController::class, 'store'])
-    ->name('auth.login');
+        ->name('auth.login');
 
     Route::get('auth/forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('auth.forgot-password.form');
@@ -34,6 +35,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('auth/reset-password', [NewPasswordController::class, 'store'])
         ->name('auth.password.reset');
+
+    Route::get('auth/redirect/{provider}', [SocialController::class, 'redirectToProvider'])
+        ->name('auth.login.provider.redirect');
+
+    Route::get('auth/{provider}/callback', [SocialController::class, 'providerCallback'])
+        ->name('auth.login.provider.callback');
 });
 
 Route::middleware('auth')->group(function () {

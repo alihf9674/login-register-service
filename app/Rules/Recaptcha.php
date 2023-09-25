@@ -20,8 +20,8 @@ class Recaptcha implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value)
@@ -37,16 +37,11 @@ class Recaptcha implements Rule
             ]
         ]);
 
-         return json_decode($response->getBody())->success;
+        return json_decode($response->getBody())->success;
     }
 
-    /**
-     * Get the validation error message.
-     *
-     * @return string
-     */
     public function message()
     {
-        return 'ورود ناموفق لطفا دوباره تلاش کنید.';
+        return "خطای پذیرش من ربات نیستم";
     }
 }

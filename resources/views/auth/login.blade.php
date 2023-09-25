@@ -56,7 +56,7 @@
                         </div>
                         <div class="offset-sm-3">
                             <button type="submit" class="btn btn-primary">@lang('auth.login')</button>
-                            {{--                            <a href="" class="btn btn-danger">@lang('auth.login with google')</a>--}}
+                            <a href="{{route('auth.login.provider.redirect' , 'google')}}" class="btn btn-danger">@lang('auth.login with google')</a>
                         </div>
                 </div>
                 </form>
