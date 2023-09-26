@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\MagicController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -41,13 +42,16 @@ Route::middleware('guest')->group(function () {
 
     Route::get('auth/{provider}/callback', [SocialController::class, 'providerCallback'])
         ->name('auth.login.provider.callback');
+
+    Route::get('auth/magic/login', [MagicController::class, 'showMagicForm'])
+        ->name('auth.magic.login.form');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('auth/verify-email', [EmailVerificationPromptController::class, ' __invoke'])
         ->name('verification.notice');
 
-    Route::get('auth/email/verify' ,[VerifyEmailController::class, 'verify'])
+    Route::get('auth/email/verify', [VerifyEmailController::class, 'verify'])
         ->middleware(['signed', 'throttle:6,1'])
         ->name('auth.email.verify');
 
