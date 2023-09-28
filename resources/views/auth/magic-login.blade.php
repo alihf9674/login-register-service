@@ -12,7 +12,7 @@
                     @lang('auth.login with magic link')
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{route('auth.magic.send.token')}}">
                         @csrf
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label" for="email">@lang('auth.email')</label>
@@ -33,7 +33,6 @@
                         <div class="offset-sm-3">
                             <button type="submit" class="btn btn-primary">@lang('auth.send magic link')</button>
                         </div>
-                </div>
                 </form>
             </div>
         </div>
