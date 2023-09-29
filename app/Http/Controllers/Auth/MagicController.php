@@ -17,6 +17,7 @@ class MagicController extends Controller
     {
         $this->validateForm($request);
         $magicAuthentication->requestLink();
+        return back()->with('magicLinkSent', true);
     }
 
     protected function validateForm(Request $request)

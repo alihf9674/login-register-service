@@ -33,3 +33,8 @@
         @lang('auth.password changed')
     </div>
 @endif
+@if (session('magicLinkSent'))
+    <div class="alert alert-success">
+        @lang('auth.magic link sent')
+    </div>
+@endif

@@ -40,7 +40,7 @@ return [
     'login with google' => 'ورود با گوگل',
     'login with magic link' => 'ورود بدون رمز عبور',
     'send magic link' => 'ارسال لینک ورود',
-    'magicLinkSent' => 'لینک ورود با موفقیت ارسال شد.',
+    'magic link sent' => 'لینک ورود با موفقیت ارسال شد.',
     'invalidToken' => 'لینک ورود معتبر نمیباشد.',
     'two factor authentication' => 'احراز هویت ۲ مرحله ای',
     'enable' => 'فعال کردن',

@@ -17,6 +17,8 @@ class MagicAuthentication
     public function requestLink()
     {
         $user = User::where('email', $this->request->email)->firstOrFail();
-        $user->createMagicToken();
+        $user->createMagicToken()->send([
+            'remember' => $this->request->has('remember')
+        ]);
     }
 }
