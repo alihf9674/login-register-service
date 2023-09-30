@@ -11,15 +11,34 @@ class LoginToken extends Model
 {
 //    use HasFactory;
 
+    const TOKEN_EXPIRE = 120;
+
     protected $fillable = ['token'];
 
-    public function user()
+    /**
+     * @var mixed
+     */
+
+    //change primary key
+    public function getRouteKeyName()
+    {
+        return 'token';
+    }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    //send email for magic link via email
     public function send(array $options)
     {
         SendEmail::dispatch($this->user, new SendMagicLink($this, $options));
+    }
+
+    //check expire time of token
+    public function isExpired(): bool
+    {
+        return $this->created_at->diffInSeconds(now()) > self::TOKEN_EXPIRE;
     }
 }
