@@ -21,6 +21,7 @@
                     <div class="dropdown-menu logout-btn" aria-labelledby="navbarDropdown">
                         <a href="" class="dropdown-item"></a>
                         <a class="dropdown-item" href="{{route('auth.logout')}}">@lang('auth.logout')</a>
+                        <a href="" class="dropdown-item">@lang('auth.two factor authentication')</a>
                     </div>
                 </li>
             </ul>
