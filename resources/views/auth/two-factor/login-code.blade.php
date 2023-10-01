@@ -2,7 +2,6 @@
 
 @section('title' , __('auth.two factor authentication'))
 
-
 @section('content')
 
     <div class="row justify-content-center">

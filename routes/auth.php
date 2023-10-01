@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\SocialController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('magic/login/{token}', [MagicController::class, 'login'])
         ->name('auth.magic.login');
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -72,4 +74,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('auth.logout');
+
+    Route::get('two-factor/toggle', [TwoFactorController::class, 'showToggleForm'])
+        ->name('auth.two.factor.toggle.form');
+
+    Route::get('two-factor/activate', [TwoFactorController::class, 'activate'])
+        ->name('auth.two.factor.activate');
 });
