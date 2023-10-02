@@ -10,6 +10,8 @@ class TwoFactorAuthentication
 {
     protected $request;
 
+    const CODE_SENT = 'code.sent';
+
     public function __construct(Request $request)
     {
         $this->request = $request;
@@ -18,6 +20,8 @@ class TwoFactorAuthentication
     public function requestCode(User $user)
     {
         $code = TwoFactor::generateCodeFor($user);
+        $code->send();
 
+        return static::CODE_SENT;
     }
 }

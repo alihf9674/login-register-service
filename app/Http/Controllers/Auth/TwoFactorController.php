@@ -15,8 +15,17 @@ class TwoFactorController extends Controller
         return view('auth.two-factor.toggle');
     }
 
+    public function showEnterCodeForm()
+    {
+        return view('auth.two-factor.enter-code');
+    }
+
     public function activate(TwoFactorAuthentication $twoFactorAuthentication)
     {
         $response = $twoFactorAuthentication->requestCode(Auth::user());
+
+        return $response === $twoFactorAuthentication::CODE_SENT
+            ? redirect()->route('auth.two.factor.code.form')
+            : back()->with('cantSendCode', true);
     }
 }

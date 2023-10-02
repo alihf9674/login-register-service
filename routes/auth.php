@@ -80,4 +80,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('two-factor/activate', [TwoFactorController::class, 'activate'])
         ->name('auth.two.factor.activate');
+
+    Route::get('two-factor/code', [TwoFactorController::class, 'showEnterCodeForm'])
+        ->name('auth.two.factor.code.form');
 });

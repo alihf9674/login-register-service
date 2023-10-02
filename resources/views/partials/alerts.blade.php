@@ -43,3 +43,8 @@
         @lang('auth.invalidToken')
     </div>
 @endif
+@if (session('cantSendCode'))
+    <div class="alert alert-danger">
+        @lang('auth.cantSendCode')
+    </div>
+@endif
