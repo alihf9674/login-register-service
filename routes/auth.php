@@ -52,7 +52,6 @@ Route::middleware('guest')->group(function () {
 
     Route::get('magic/login/{token}', [MagicController::class, 'login'])
         ->name('auth.magic.login');
-
 });
 
 Route::middleware('auth')->group(function () {
@@ -75,12 +74,15 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('auth.logout');
 
-    Route::get('two-factor/toggle', [TwoFactorController::class, 'showToggleForm'])
+    Route::get('auth/two-factor/toggle', [TwoFactorController::class, 'showToggleForm'])
         ->name('auth.two.factor.toggle.form');
 
-    Route::get('two-factor/activate', [TwoFactorController::class, 'activate'])
+    Route::get('auth/two-factor/activate', [TwoFactorController::class, 'activate'])
         ->name('auth.two.factor.activate');
 
-    Route::get('two-factor/code', [TwoFactorController::class, 'showEnterCodeForm'])
+    Route::get('auth/two-factor/code', [TwoFactorController::class, 'showEnterCodeForm'])
         ->name('auth.two.factor.code.form');
+
+    Route::post('auth/two-factor/code', [TwoFactorController::class,'confirmCode'])
+        ->name('auth.two.factor.code');
 });

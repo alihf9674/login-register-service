@@ -48,3 +48,13 @@
         @lang('auth.cantSendCode')
     </div>
 @endif
+@if (session('invalidCode'))
+    <div class="alert alert-danger">
+        @lang('auth.invalidCode')
+    </div>
+@endif
+@if (session('twoFactorActivated'))
+    <div class="alert alert-success">
+        @lang('auth.twoFactorActivated')
+    </div>
+@endif

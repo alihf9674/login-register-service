@@ -6,8 +6,14 @@ use App\Models\TwoFactor;
 
 trait HasTwoFactor
 {
-    public function code()
+    public function code(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(TwoFactor::class);
+    }
+
+    public function activateTwoFactor()
+    {
+        $this->has_two_factor = true;
+        $this->save();
     }
 }

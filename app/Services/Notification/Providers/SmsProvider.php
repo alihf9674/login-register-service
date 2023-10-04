@@ -22,6 +22,7 @@ class SmsProvider implements Provider
     {
         $this->havePhoneNumber();
         $client = new Client();
+
         $response = $client->post(config('service.sms.uri'), $this->prepareSmsData());
         return $response->getBody();
     }

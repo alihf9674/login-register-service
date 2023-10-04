@@ -17,6 +17,8 @@ class TwoFactor extends Model
         'code'
     ];
 
+    const CODE_EXPIRE = 60; //in second
+
     public static function generateCodeFor(User $user)
     {
         $user->code()->delete();
@@ -34,11 +36,21 @@ class TwoFactor extends Model
 
     public function user()
     {
-        return $this->blongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function getCodeForSendAttribute()
     {
         return __('auth.codeForSend', ['code' => $this->code]);
+    }
+
+    public function isExpired(): bool
+    {
+        return $this->created_at->deffrentInSeconds(now()) > static::CODE_EXPIRE;
+    }
+
+    public function isEqualWith(string $code): bool
+    {
+        return $this->code == $code;
     }
 }
