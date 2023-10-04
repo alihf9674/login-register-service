@@ -4,19 +4,30 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\Recaptcha;
+use App\Services\Auth\TwoFactorAuthentication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class AuthenticatedSessionController extends Controller
 {
+    protected $twoFactorAuthentication;
+
+    public function __construct(TwoFactorAuthentication $twoFactorAuthentication)
+    {
+        $this->twoFactorAuthentication = $twoFactorAuthentication;
+    }
+
+
     /**
      * Display the login view.
      *
      * @return \Illuminate\View\View
      */
+
     public function create()
     {
         return view('auth.login');
@@ -24,23 +35,25 @@ class AuthenticatedSessionController extends Controller
 
     /**
      * Handle an incoming authentication request.
-     * @return \Illuminate\Http\RedirectResponse
      * @param \App\Http\Requests\Auth\LoginRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      * @throws ValidationException
      */
     public function store(LoginRequest $request)
     {
         $this->validateForm($request);
-        if ($request->authenticate()) {
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
+        $request->authenticate();
+        $user = $this->getUser($request);
+
+        if ($user->hasTwoFactor()) {
+            $this->twoFactorAuthentication->requestCode($user);
+            return $this->sendHasTwoFactorResponse();
         }
-    }
+        Auth::login($user, $request->remember);
 
+        $request->session()->regenerate();
 
-    protected function validateForm(LoginRequest $request)
-    {
-        $request->validate($request->rules());
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -52,5 +65,25 @@ class AuthenticatedSessionController extends Controller
         session()->invalidate();
         Auth::logout();
         return redirect('/');
+    }
+
+    public function showCodeForm()
+    {
+        return view('auth.two-factor.login-code');
+    }
+
+    protected function getUser($request)
+    {
+        return User::where('email', $request->email)->firstOrFail();
+    }
+
+    protected function sendHasTwoFactorResponse(): \Illuminate\Http\RedirectResponse
+    {
+        return redirect()->route('auth.login.code.form');
+    }
+
+    protected function validateForm(LoginRequest $request)
+    {
+        $request->validate($request->rules());
     }
 }

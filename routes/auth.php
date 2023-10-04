@@ -50,8 +50,11 @@ Route::middleware('guest')->group(function () {
     Route::post('auth/magic/login', [MagicController::class, 'sendToken'])
         ->name('auth.magic.send.token');
 
-    Route::get('magic/login/{token}', [MagicController::class, 'login'])
+    Route::get('auth/magic/login/{token}', [MagicController::class, 'login'])
         ->name('auth.magic.login');
+
+    Route::get('auth/login/code', [AuthenticatedSessionController::class,'showCodeForm'])
+        ->name('auth.login.code.form');
 });
 
 Route::middleware('auth')->group(function () {
