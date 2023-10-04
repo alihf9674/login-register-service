@@ -33,7 +33,7 @@ class TwoFactorAuthentication
     }
 
     //activated two-factor
-    public function activate()
+    public function activate(): string
     {
         if (!$this->isValidCode())
             return static::INVALID_CODE;
@@ -45,6 +45,10 @@ class TwoFactorAuthentication
         return static::ACTIVATED;
     }
 
+    public function deactivate(User $user)
+    {
+        return $user->deactivateTwoFactor();
+    }
 
     protected function setSession(TwoFactor $code)
     {

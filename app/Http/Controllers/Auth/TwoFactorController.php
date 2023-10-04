@@ -48,6 +48,13 @@ class TwoFactorController extends Controller
             : back()->with('invalidCode', true);
     }
 
+    public function deactivate(): \Illuminate\Http\RedirectResponse
+    {
+        $this->twoFactorAuthentication->deactivate(Auth::user());
+
+        return back()->with('twoFactorDeactivated', true);
+    }
+
     protected function validateForm($request)
     {
         $request->vlidate([

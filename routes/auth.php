@@ -85,4 +85,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('auth/two-factor/code', [TwoFactorController::class,'confirmCode'])
         ->name('auth.two.factor.code');
+
+    Route::get('two-factor/deactivate', [TwoFactorController::class,'deactivate'])
+        ->name('auth.two.factor.deactivate');
 });
