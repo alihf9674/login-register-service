@@ -55,6 +55,12 @@ Route::middleware('guest')->group(function () {
 
     Route::get('auth/login/code', [AuthenticatedSessionController::class,'showCodeForm'])
         ->name('auth.login.code.form');
+
+    Route::post('login/code', [AuthenticatedSessionController::class,'confirmCode'])
+        ->name('auth.login.code');
+
+    Route::get('two-factor/resent', [TwoFactorController::class,'resent'])
+        ->name('auth.two.factor.resent');
 });
 
 Route::middleware('auth')->group(function () {

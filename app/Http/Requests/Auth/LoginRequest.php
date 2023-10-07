@@ -73,7 +73,7 @@ class LoginRequest extends FormRequest
         if (!RateLimiter::tooManyAttempts($this->throttleKey(), $this->maxAttempts)) {
             return;
         }
-\
+
         event(new Lockout($this));
 
         $seconds = RateLimiter::availableIn($this->throttleKey());

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Code;
 use App\Services\Auth\TwoFactorAuthentication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,8 +37,11 @@ class TwoFactorController extends Controller
             : back()->with('cantSendCode', true);
     }
 
-    //confirm two-factor authenticated code
-    public function confirmCode(Request $request): \Illuminate\Http\RedirectResponse
+    /**
+     * confirm two-factor authenticated code
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function confirmCode(Code $request)
     {
         $this->validateForm($request);
 
@@ -55,13 +59,10 @@ class TwoFactorController extends Controller
         return back()->with('twoFactorDeactivated', true);
     }
 
-    protected function validateForm($request)
+    public function resent(): \Illuminate\Http\RedirectResponse
     {
-        $request->vlidate([
-                'code' => ['required', 'numeric', 'digits:4']
-            ]
-            , [
-                'code.digits' => __('auth.invalidCode')
-            ]);
+        $this->twoFactorAuthentication->resent();
+
+        return back()->with('codeResent', true);
     }
 }

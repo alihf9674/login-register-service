@@ -26,7 +26,7 @@
                         </div>
                         <div class="offset-sm-3">
                             <button type="submit" class="btn btn-primary">@lang('auth.confirm')</button>
-                            <a class="small ml-2" href="">@lang('auth.didNotGetCode')</a>
+                            <a class="small ml-2" href="{{route('auth.two.factor.resent')}}">@lang('auth.didNotGetCode')</a>
                         </div>
                 </div>
                 </form>

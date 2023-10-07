@@ -63,3 +63,8 @@
         @lang('auth.twoFactorDeactivated')
     </div>
 @endif
+@if (session('codeResent'))
+    <div class="alert alert-success">
+        @lang('auth.codeResent')
+    </div>
+@endif

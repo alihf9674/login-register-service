@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Code;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Rules\Recaptcha;
@@ -21,6 +22,10 @@ class AuthenticatedSessionController extends Controller
         $this->twoFactorAuthentication = $twoFactorAuthentication;
     }
 
+    public function showCodeForm()
+    {
+        return view('auth.two-factor.login-code');
+    }
 
     /**
      * Display the login view.
@@ -67,9 +72,13 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    public function showCodeForm()
+    public function confirmCode(Code $code)
     {
-        return view('auth.two-factor.login-code');
+        $response = $this->twoFactorAuthentication->login();
+
+        return   $response === $this->twoFactorAuthentication::AUTHENTICATED
+            ? $this->sendSuccessResponse()
+            : back()->with('invalidCode', true);
     }
 
     protected function getUser($request)
@@ -85,5 +94,11 @@ class AuthenticatedSessionController extends Controller
     protected function validateForm(LoginRequest $request)
     {
         $request->validate($request->rules());
+    }
+
+    protected function sendSuccessResponse(): \Illuminate\Http\RedirectResponse
+    {
+        session()->regenerate();
+        return redirect()->intended();
     }
 }
